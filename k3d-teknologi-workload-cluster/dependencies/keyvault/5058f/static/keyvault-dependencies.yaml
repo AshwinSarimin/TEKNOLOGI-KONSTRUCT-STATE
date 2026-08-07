@@ -31,7 +31,6 @@ spec:
                 default: westeurope
                 type: string
               resourceGroupName:
-                default: teknologi-eur1-prd-platform-rg
                 type: string
               tenantId:
                 description: Azure tenant ID — injected by the pipeline from platform
@@ -40,6 +39,7 @@ spec:
             required:
             - appName
             - environment
+            - resourceGroupName
             type: object
           status:
             properties:
