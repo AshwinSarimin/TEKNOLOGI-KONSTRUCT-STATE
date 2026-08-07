@@ -1,0 +1,118 @@
+apiVersion: apiextensions.crossplane.io/v1
+kind: CompositeResourceDefinition
+metadata:
+  annotations:
+    argocd.argoproj.io/sync-wave: "0"
+  name: xkeyvaults.platform.teknologi.io
+spec:
+  group: platform.teknologi.io
+  names:
+    kind: XKeyVault
+    plural: xkeyvaults
+  versions:
+  - name: v1alpha1
+    referenceable: true
+    schema:
+      openAPIV3Schema:
+        properties:
+          spec:
+            properties:
+              appName:
+                type: string
+              environment:
+                default: dev
+                enum:
+                - dev
+                - tst
+                - acc
+                - prd
+                type: string
+              location:
+                default: westeurope
+                type: string
+              resourceGroupName:
+                default: teknologi-eur1-prd-platform-rg
+                type: string
+              tenantId:
+                description: Azure tenant ID — injected by the pipeline from platform
+                  secrets
+                type: string
+            required:
+            - appName
+            - environment
+            type: object
+          status:
+            properties:
+              vaultName:
+                type: string
+              vaultUri:
+                type: string
+            type: object
+        type: object
+    served: true
+---
+apiVersion: apiextensions.crossplane.io/v1
+kind: Composition
+metadata:
+  annotations:
+    argocd.argoproj.io/sync-wave: "0"
+  labels:
+    provider: azure
+  name: xkeyvault-azure
+spec:
+  compositeTypeRef:
+    apiVersion: platform.teknologi.io/v1alpha1
+    kind: XKeyVault
+  mode: Resources
+  resources:
+  - base:
+      apiVersion: keyvault.azure.upbound.io/v1beta2
+      kind: Vault
+      spec:
+        forProvider:
+          purgeProtectionEnabled: false
+          skuName: standard
+          softDeleteRetentionDays: 7
+        providerConfigRef:
+          name: azure-provider
+    name: keyvault
+    patches:
+    - fromFieldPath: spec.tenantId
+      toFieldPath: spec.forProvider.tenantId
+      type: FromCompositeFieldPath
+    - fromFieldPath: spec.location
+      policy:
+        fromFieldPath: Optional
+      toFieldPath: spec.forProvider.location
+      type: FromCompositeFieldPath
+    - fromFieldPath: spec.resourceGroupName
+      policy:
+        fromFieldPath: Optional
+      toFieldPath: spec.forProvider.resourceGroupName
+      type: FromCompositeFieldPath
+    - combine:
+        strategy: string
+        string:
+          fmt: kv-%s-%s
+        variables:
+        - fromFieldPath: spec.appName
+        - fromFieldPath: spec.environment
+      toFieldPath: metadata.name
+      type: CombineFromComposite
+    - combine:
+        strategy: string
+        string:
+          fmt: kv-%s-%s
+        variables:
+        - fromFieldPath: spec.appName
+        - fromFieldPath: spec.environment
+      toFieldPath: spec.forProvider.name
+      type: CombineFromComposite
+    - fromFieldPath: metadata.name
+      toFieldPath: status.vaultName
+      type: ToCompositeFieldPath
+    - fromFieldPath: status.atProvider.vaultUri
+      policy:
+        fromFieldPath: Optional
+      toFieldPath: status.vaultUri
+      type: ToCompositeFieldPath
