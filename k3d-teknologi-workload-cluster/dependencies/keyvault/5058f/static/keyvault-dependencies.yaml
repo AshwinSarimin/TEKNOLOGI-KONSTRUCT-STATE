@@ -33,8 +33,7 @@ spec:
               resourceGroupName:
                 type: string
               tenantId:
-                description: Azure tenant ID — injected by the pipeline from platform
-                  secrets
+                description: Azure tenant ID
                 type: string
             required:
             - appName
