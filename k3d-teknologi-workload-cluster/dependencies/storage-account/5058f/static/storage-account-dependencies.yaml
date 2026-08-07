@@ -31,7 +31,6 @@ spec:
                 default: westeurope
                 type: string
               resourceGroupName:
-                default: teknologi-eur1-prd-platform-rg
                 type: string
               storageAccountName:
                 description: Pre-computed Azure storage account name (3-24 chars lowercase
@@ -41,6 +40,7 @@ spec:
             - appName
             - environment
             - storageAccountName
+            - resourceGroupName
             type: object
           status:
             properties:
