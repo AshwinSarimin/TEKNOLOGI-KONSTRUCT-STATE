@@ -1,0 +1,135 @@
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  annotations:
+    argocd.argoproj.io/sync-wave: "0"
+  name: notify-watcher
+  namespace: default
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  annotations:
+    argocd.argoproj.io/sync-wave: "0"
+  name: notify-watcher
+rules:
+- apiGroups:
+  - platform.teknologi.io
+  resources:
+  - '*'
+  verbs:
+  - get
+  - list
+  - watch
+- apiGroups:
+  - ""
+  resources:
+  - events
+  verbs:
+  - create
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  annotations:
+    argocd.argoproj.io/sync-wave: "0"
+  name: notify-watcher
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: notify-watcher
+subjects:
+- kind: ServiceAccount
+  name: notify-watcher
+  namespace: default
+---
+apiVersion: apiextensions.crossplane.io/v1
+kind: CompositeResourceDefinition
+metadata:
+  annotations:
+    argocd.argoproj.io/sync-wave: "0"
+  name: xnamespaces.platform.teknologi.io
+spec:
+  group: platform.teknologi.io
+  names:
+    kind: XNamespace
+    plural: xnamespaces
+  versions:
+  - name: v1alpha1
+    referenceable: true
+    schema:
+      openAPIV3Schema:
+        properties:
+          spec:
+            properties:
+              environment:
+                default: dev
+                enum:
+                - dev
+                - tst
+                - acc
+                - prd
+                type: string
+              namespaceName:
+                type: string
+              networkVisibility:
+                default: private
+                enum:
+                - private
+                - public
+                type: string
+            required:
+            - namespaceName
+            type: object
+          status:
+            properties:
+              namespaceName:
+                type: string
+            type: object
+        type: object
+    served: true
+---
+apiVersion: apiextensions.crossplane.io/v1
+kind: Composition
+metadata:
+  annotations:
+    argocd.argoproj.io/sync-wave: "0"
+  labels:
+    provider: kubernetes
+  name: xnamespace-kubernetes
+spec:
+  compositeTypeRef:
+    apiVersion: platform.teknologi.io/v1alpha1
+    kind: XNamespace
+  mode: Resources
+  resources:
+  - base:
+      apiVersion: kubernetes.crossplane.io/v1alpha2
+      kind: Object
+      spec:
+        forProvider:
+          manifest:
+            apiVersion: v1
+            kind: Namespace
+            metadata:
+              labels:
+                teknologi.io/environment: placeholder
+                teknologi.io/managed-by: crossplane
+                teknologi.io/team: placeholder
+              name: placeholder
+        providerConfigRef:
+          name: kubernetes-in-cluster
+    name: namespace
+    patches:
+    - fromFieldPath: spec.namespaceName
+      toFieldPath: spec.forProvider.manifest.metadata.name
+      type: FromCompositeFieldPath
+    - fromFieldPath: spec.namespaceName
+      toFieldPath: spec.forProvider.manifest.metadata.labels["teknologi.io/team"]
+      type: FromCompositeFieldPath
+    - fromFieldPath: spec.environment
+      toFieldPath: spec.forProvider.manifest.metadata.labels["teknologi.io/environment"]
+      type: FromCompositeFieldPath
+    - fromFieldPath: spec.forProvider.manifest.metadata.name
+      toFieldPath: status.namespaceName
+      type: ToCompositeFieldPath
