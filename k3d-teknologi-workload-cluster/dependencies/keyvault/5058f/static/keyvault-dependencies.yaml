@@ -111,7 +111,7 @@ spec:
             variables:
             - fromFieldPath: spec.appName
             - fromFieldPath: spec.environment
-          toFieldPath: spec.forProvider.name
+          toFieldPath: metadata.annotations[crossplane.io/external-name]
           type: CombineFromComposite
         - fromFieldPath: metadata.name
           toFieldPath: status.vaultName
