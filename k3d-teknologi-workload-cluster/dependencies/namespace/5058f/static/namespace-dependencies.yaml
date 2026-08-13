@@ -56,35 +56,42 @@ spec:
   compositeTypeRef:
     apiVersion: platform.teknologi.io/v1alpha1
     kind: XNamespace
-  mode: Resources
-  resources:
-  - base:
-      apiVersion: kubernetes.crossplane.io/v1alpha2
-      kind: Object
-      spec:
-        forProvider:
-          manifest:
-            apiVersion: v1
-            kind: Namespace
-            metadata:
-              labels:
-                teknologi.io/environment: placeholder
-                teknologi.io/managed-by: crossplane
-                teknologi.io/team: placeholder
-              name: placeholder
-        providerConfigRef:
-          name: kubernetes-in-cluster
-    name: namespace
-    patches:
-    - fromFieldPath: spec.namespaceName
-      toFieldPath: spec.forProvider.manifest.metadata.name
-      type: FromCompositeFieldPath
-    - fromFieldPath: spec.namespaceName
-      toFieldPath: spec.forProvider.manifest.metadata.labels["teknologi.io/team"]
-      type: FromCompositeFieldPath
-    - fromFieldPath: spec.environment
-      toFieldPath: spec.forProvider.manifest.metadata.labels["teknologi.io/environment"]
-      type: FromCompositeFieldPath
-    - fromFieldPath: spec.forProvider.manifest.metadata.name
-      toFieldPath: status.namespaceName
-      type: ToCompositeFieldPath
+  mode: Pipeline
+  pipeline:
+  - functionRef:
+      name: function-patch-and-transform
+    input:
+      apiVersion: pt.fn.crossplane.io/v1beta1
+      kind: Resources
+      resources:
+      - base:
+          apiVersion: kubernetes.crossplane.io/v1alpha2
+          kind: Object
+          spec:
+            forProvider:
+              manifest:
+                apiVersion: v1
+                kind: Namespace
+                metadata:
+                  labels:
+                    teknologi.io/environment: placeholder
+                    teknologi.io/managed-by: crossplane
+                    teknologi.io/team: placeholder
+                  name: placeholder
+            providerConfigRef:
+              name: kubernetes-in-cluster
+        name: namespace
+        patches:
+        - fromFieldPath: spec.namespaceName
+          toFieldPath: spec.forProvider.manifest.metadata.name
+          type: FromCompositeFieldPath
+        - fromFieldPath: spec.namespaceName
+          toFieldPath: spec.forProvider.manifest.metadata.labels["teknologi.io/team"]
+          type: FromCompositeFieldPath
+        - fromFieldPath: spec.environment
+          toFieldPath: spec.forProvider.manifest.metadata.labels["teknologi.io/environment"]
+          type: FromCompositeFieldPath
+        - fromFieldPath: spec.forProvider.manifest.metadata.name
+          toFieldPath: status.namespaceName
+          type: ToCompositeFieldPath
+    step: patch-and-transform
