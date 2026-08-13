@@ -36,21 +36,28 @@ spec:
   compositeTypeRef:
     apiVersion: platform.teknologi.io/v1alpha1
     kind: XResourceGroup
-  mode: Resources
-  resources:
-  - base:
-      apiVersion: azure.upbound.io/v1beta1
-      kind: ResourceGroup
-      spec:
-        providerConfigRef:
-          name: azure-provider
-    name: resource-group
-    patches:
-    - fromFieldPath: spec.location
-      policy:
-        fromFieldPath: Optional
-      toFieldPath: spec.forProvider.location
-      type: FromCompositeFieldPath
-    - fromFieldPath: metadata.name
-      toFieldPath: metadata.annotations[crossplane.io/external-name]
-      type: FromCompositeFieldPath
+  mode: Pipeline
+  pipeline:
+  - functionRef:
+      name: function-patch-and-transform
+    input:
+      apiVersion: pt.fn.crossplane.io/v1beta1
+      kind: Resources
+      resources:
+      - base:
+          apiVersion: azure.upbound.io/v1beta1
+          kind: ResourceGroup
+          spec:
+            providerConfigRef:
+              name: azure-provider
+        name: resource-group
+        patches:
+        - fromFieldPath: spec.location
+          policy:
+            fromFieldPath: Optional
+          toFieldPath: spec.forProvider.location
+          type: FromCompositeFieldPath
+        - fromFieldPath: metadata.name
+          toFieldPath: metadata.annotations[crossplane.io/external-name]
+          type: FromCompositeFieldPath
+    step: patch-and-transform
