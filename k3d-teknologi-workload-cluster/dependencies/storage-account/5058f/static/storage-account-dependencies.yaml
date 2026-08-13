@@ -64,43 +64,50 @@ spec:
   compositeTypeRef:
     apiVersion: platform.teknologi.io/v1alpha1
     kind: XStorageAccount
-  mode: Resources
-  resources:
-  - base:
-      apiVersion: storage.azure.upbound.io/v1beta2
-      kind: Account
-      spec:
-        forProvider:
-          accountKind: StorageV2
-          accountReplicationType: LRS
-          accountTier: Standard
-          httpsTrafficOnlyEnabled: true
-          minTlsVersion: TLS1_2
-        providerConfigRef:
-          name: azure-provider
-    name: storage-account
-    patches:
-    - fromFieldPath: spec.storageAccountName
-      toFieldPath: metadata.name
-      type: FromCompositeFieldPath
-    - fromFieldPath: spec.storageAccountName
-      toFieldPath: metadata.annotations[crossplane.io/external-name]
-      type: FromCompositeFieldPath
-    - fromFieldPath: spec.location
-      policy:
-        fromFieldPath: Optional
-      toFieldPath: spec.forProvider.location
-      type: FromCompositeFieldPath
-    - fromFieldPath: spec.resourceGroupName
-      policy:
-        fromFieldPath: Optional
-      toFieldPath: spec.forProvider.resourceGroupName
-      type: FromCompositeFieldPath
-    - fromFieldPath: metadata.name
-      toFieldPath: status.storageAccountName
-      type: ToCompositeFieldPath
-    - fromFieldPath: status.atProvider.primaryBlobEndpoint
-      policy:
-        fromFieldPath: Optional
-      toFieldPath: status.primaryBlobEndpoint
-      type: ToCompositeFieldPath
+  mode: Pipeline
+  pipeline:
+  - functionRef:
+      name: function-patch-and-transform
+    input:
+      apiVersion: pt.fn.crossplane.io/v1beta1
+      kind: Resources
+      resources:
+      - base:
+          apiVersion: storage.azure.upbound.io/v1beta2
+          kind: Account
+          spec:
+            forProvider:
+              accountKind: StorageV2
+              accountReplicationType: LRS
+              accountTier: Standard
+              httpsTrafficOnlyEnabled: true
+              minTlsVersion: TLS1_2
+            providerConfigRef:
+              name: azure-provider
+        name: storage-account
+        patches:
+        - fromFieldPath: spec.storageAccountName
+          toFieldPath: metadata.name
+          type: FromCompositeFieldPath
+        - fromFieldPath: spec.storageAccountName
+          toFieldPath: metadata.annotations[crossplane.io/external-name]
+          type: FromCompositeFieldPath
+        - fromFieldPath: spec.location
+          policy:
+            fromFieldPath: Optional
+          toFieldPath: spec.forProvider.location
+          type: FromCompositeFieldPath
+        - fromFieldPath: spec.resourceGroupName
+          policy:
+            fromFieldPath: Optional
+          toFieldPath: spec.forProvider.resourceGroupName
+          type: FromCompositeFieldPath
+        - fromFieldPath: metadata.name
+          toFieldPath: status.storageAccountName
+          type: ToCompositeFieldPath
+        - fromFieldPath: status.atProvider.primaryBlobEndpoint
+          policy:
+            fromFieldPath: Optional
+          toFieldPath: status.primaryBlobEndpoint
+          type: ToCompositeFieldPath
+    step: patch-and-transform
