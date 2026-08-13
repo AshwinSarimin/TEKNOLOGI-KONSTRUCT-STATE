@@ -62,56 +62,63 @@ spec:
   compositeTypeRef:
     apiVersion: platform.teknologi.io/v1alpha1
     kind: XKeyVault
-  mode: Resources
-  resources:
-  - base:
-      apiVersion: keyvault.azure.upbound.io/v1beta2
-      kind: Vault
-      spec:
-        forProvider:
-          purgeProtectionEnabled: false
-          skuName: standard
-          softDeleteRetentionDays: 7
-        providerConfigRef:
-          name: azure-provider
-    name: keyvault
-    patches:
-    - fromFieldPath: spec.tenantId
-      toFieldPath: spec.forProvider.tenantId
-      type: FromCompositeFieldPath
-    - fromFieldPath: spec.location
-      policy:
-        fromFieldPath: Optional
-      toFieldPath: spec.forProvider.location
-      type: FromCompositeFieldPath
-    - fromFieldPath: spec.resourceGroupName
-      policy:
-        fromFieldPath: Optional
-      toFieldPath: spec.forProvider.resourceGroupName
-      type: FromCompositeFieldPath
-    - combine:
-        strategy: string
-        string:
-          fmt: kv-%s-%s
-        variables:
-        - fromFieldPath: spec.appName
-        - fromFieldPath: spec.environment
-      toFieldPath: metadata.name
-      type: CombineFromComposite
-    - combine:
-        strategy: string
-        string:
-          fmt: kv-%s-%s
-        variables:
-        - fromFieldPath: spec.appName
-        - fromFieldPath: spec.environment
-      toFieldPath: spec.forProvider.name
-      type: CombineFromComposite
-    - fromFieldPath: metadata.name
-      toFieldPath: status.vaultName
-      type: ToCompositeFieldPath
-    - fromFieldPath: status.atProvider.vaultUri
-      policy:
-        fromFieldPath: Optional
-      toFieldPath: status.vaultUri
-      type: ToCompositeFieldPath
+  mode: Pipeline
+  pipeline:
+  - functionRef:
+      name: function-patch-and-transform
+    input:
+      apiVersion: pt.fn.crossplane.io/v1beta1
+      kind: Resources
+      resources:
+      - base:
+          apiVersion: keyvault.azure.upbound.io/v1beta2
+          kind: Vault
+          spec:
+            forProvider:
+              purgeProtectionEnabled: false
+              skuName: standard
+              softDeleteRetentionDays: 7
+            providerConfigRef:
+              name: azure-provider
+        name: keyvault
+        patches:
+        - fromFieldPath: spec.tenantId
+          toFieldPath: spec.forProvider.tenantId
+          type: FromCompositeFieldPath
+        - fromFieldPath: spec.location
+          policy:
+            fromFieldPath: Optional
+          toFieldPath: spec.forProvider.location
+          type: FromCompositeFieldPath
+        - fromFieldPath: spec.resourceGroupName
+          policy:
+            fromFieldPath: Optional
+          toFieldPath: spec.forProvider.resourceGroupName
+          type: FromCompositeFieldPath
+        - combine:
+            strategy: string
+            string:
+              fmt: kv-%s-%s
+            variables:
+            - fromFieldPath: spec.appName
+            - fromFieldPath: spec.environment
+          toFieldPath: metadata.name
+          type: CombineFromComposite
+        - combine:
+            strategy: string
+            string:
+              fmt: kv-%s-%s
+            variables:
+            - fromFieldPath: spec.appName
+            - fromFieldPath: spec.environment
+          toFieldPath: spec.forProvider.name
+          type: CombineFromComposite
+        - fromFieldPath: metadata.name
+          toFieldPath: status.vaultName
+          type: ToCompositeFieldPath
+        - fromFieldPath: status.atProvider.vaultUri
+          policy:
+            fromFieldPath: Optional
+          toFieldPath: status.vaultUri
+          type: ToCompositeFieldPath
+    step: patch-and-transform
