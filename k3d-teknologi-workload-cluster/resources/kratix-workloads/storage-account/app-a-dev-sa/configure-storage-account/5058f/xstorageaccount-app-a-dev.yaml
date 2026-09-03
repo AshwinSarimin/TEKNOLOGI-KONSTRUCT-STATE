@@ -1,0 +1,15 @@
+apiVersion: platform.teknologi.io/v1alpha1
+kind: XStorageAccount
+metadata:
+  name: sa-app-a-dev
+  annotations:
+    argocd.argoproj.io/sync-wave: "1"
+  labels:
+    kratix.io/promise-name: storage-account
+    kratix.io/resource-name: app-a-dev-sa
+spec:
+  appName: app-a
+  environment: dev
+  storageAccountName: tekappadevsa
+  location: westeurope
+  resourceGroupName: teknologi-eur1-prd-platform-rg
