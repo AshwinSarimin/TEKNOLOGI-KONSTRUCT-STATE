@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: storage-account-app-a-tf-dev-info
+  namespace: default
+  labels:
+    teknologi.io/managed-by: kratix
+    teknologi.io/promise: storage-account
+    teknologi.io/team: app-a-tf
+data:
+  storageAccountName: tekappatfdevsa
+  primaryBlobEndpoint: https://tekappatfdevsa.blob.core.windows.net/
+  resourceGroupName: teknologi-eur1-prd-platform-rg
+  location: westeurope
+  environment: dev
