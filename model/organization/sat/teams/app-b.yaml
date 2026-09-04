@@ -1,0 +1,14 @@
+apiVersion: backstage.io/v1alpha1
+kind: Group
+metadata:
+  name: app-b
+  namespace: default
+  description: "Example team for testing the onboarding Promise"
+  annotations:
+    backstage.io/kubernetes-id: app-b
+spec:
+  type: team
+  profile:
+    displayName: "App B Team"
+  parent: sat
+  children: []
