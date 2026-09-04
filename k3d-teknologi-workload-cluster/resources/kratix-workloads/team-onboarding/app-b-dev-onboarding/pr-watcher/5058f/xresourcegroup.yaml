@@ -1,0 +1,8 @@
+apiVersion: platform.teknologi.io/v1alpha1
+kind: XResourceGroup
+metadata:
+  annotations:
+    argocd.argoproj.io/sync-wave: "1"
+  name: teknologi-eur1-dev-app-b-rg
+spec:
+  location: westeurope
