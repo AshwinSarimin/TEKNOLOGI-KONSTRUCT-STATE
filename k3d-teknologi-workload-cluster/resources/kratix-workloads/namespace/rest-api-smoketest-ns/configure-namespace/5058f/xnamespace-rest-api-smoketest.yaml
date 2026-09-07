@@ -1,0 +1,13 @@
+apiVersion: platform.teknologi.io/v1alpha1
+kind: XNamespace
+metadata:
+  name: rest-api-smoketest
+  annotations:
+    argocd.argoproj.io/sync-wave: "1"
+  labels:
+    kratix.io/promise-name: namespace
+    kratix.io/resource-name: rest-api-smoketest-ns
+spec:
+  namespaceName: rest-api-smoketest
+  environment: dev
+  networkVisibility: private
