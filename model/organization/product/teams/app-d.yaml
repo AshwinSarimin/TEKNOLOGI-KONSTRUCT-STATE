@@ -1,0 +1,14 @@
+apiVersion: backstage.io/v1alpha1
+kind: Group
+metadata:
+  name: app-d
+  namespace: default
+  description: "Phase 10.2 post-recreate end-to-end retest of the team-onboarding flow (no maxWait timeout, freshly bootstrapped cluster)"
+  annotations:
+    backstage.io/kubernetes-id: app-d
+spec:
+  type: team
+  profile:
+    displayName: "App D Team"
+  parent: product
+  children: []
