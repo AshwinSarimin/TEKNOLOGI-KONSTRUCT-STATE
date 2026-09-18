@@ -1,0 +1,10 @@
+apiVersion: platform.teknologi.io/v1alpha1
+kind: XNamespace
+metadata:
+  annotations:
+    argocd.argoproj.io/sync-wave: "2"
+  name: app-d-dev
+spec:
+  environment: dev
+  namespaceName: app-d-dev
+  networkVisibility: private

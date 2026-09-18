@@ -1,0 +1,12 @@
+apiVersion: platform.teknologi.io/v1alpha1
+kind: XKeyVault
+metadata:
+  annotations:
+    argocd.argoproj.io/sync-wave: "2"
+  name: kv-app-d-dev
+spec:
+  appName: app-d
+  environment: dev
+  location: westeurope
+  resourceGroupName: teknologi-eur1-dev-app-d-rg
+  tenantId: 99f9af3a-fd8b-41ec-b487-483a0c562b5c
