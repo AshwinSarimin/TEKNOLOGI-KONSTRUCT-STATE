@@ -1,0 +1,14 @@
+apiVersion: backstage.io/v1alpha1
+kind: Group
+metadata:
+  name: matrix-onb-restapi
+  namespace: default
+  description: "Part B validation matrix - TeamOnboarding via REST API"
+  annotations:
+    backstage.io/kubernetes-id: matrix-onb-restapi
+spec:
+  type: team
+  profile:
+    displayName: "Matrix Onboarding RestAPI Test Team"
+  parent: product
+  children: []
