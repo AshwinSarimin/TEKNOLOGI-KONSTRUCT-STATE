@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: storage-account-matrix-kubectl-tf-dev-info
+  namespace: default
+  labels:
+    teknologi.io/managed-by: kratix
+    teknologi.io/promise: storage-account
+    teknologi.io/team: matrix-kubectl-tf
+data:
+  storageAccountName: tekmatrixkubectltfdevsa
+  primaryBlobEndpoint: https://tekmatrixkubectltfdevsa.blob.core.windows.net/
+  resourceGroupName: teknologi-eur1-prd-platform-rg
+  location: westeurope
+  environment: dev
