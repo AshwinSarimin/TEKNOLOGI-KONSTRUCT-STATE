@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: storage-account-matrix-restapi-tf-dev-info
+  namespace: default
+  labels:
+    teknologi.io/managed-by: kratix
+    teknologi.io/promise: storage-account
+    teknologi.io/team: matrix-restapi-tf
+data:
+  storageAccountName: tekmatrixrestapitfdevsa
+  primaryBlobEndpoint: https://tekmatrixrestapitfdevsa.blob.core.windows.net/
+  resourceGroupName: teknologi-eur1-prd-platform-rg
+  location: westeurope
+  environment: dev
