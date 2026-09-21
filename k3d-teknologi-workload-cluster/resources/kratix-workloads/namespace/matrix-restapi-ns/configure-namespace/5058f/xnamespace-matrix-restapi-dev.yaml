@@ -1,0 +1,13 @@
+apiVersion: platform.teknologi.io/v1alpha1
+kind: XNamespace
+metadata:
+  name: matrix-restapi-dev
+  annotations:
+    argocd.argoproj.io/sync-wave: "1"
+  labels:
+    kratix.io/promise-name: namespace
+    kratix.io/resource-name: matrix-restapi-ns
+spec:
+  namespaceName: matrix-restapi-dev
+  environment: dev
+  networkVisibility: private
