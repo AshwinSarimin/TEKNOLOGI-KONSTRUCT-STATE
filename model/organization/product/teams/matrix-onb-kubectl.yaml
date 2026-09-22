@@ -1,0 +1,14 @@
+apiVersion: backstage.io/v1alpha1
+kind: Group
+metadata:
+  name: matrix-onb-kubectl
+  namespace: default
+  description: "Part B validation matrix — TeamOnboarding via kubectl/CRD"
+  annotations:
+    backstage.io/kubernetes-id: matrix-onb-kubectl
+spec:
+  type: team
+  profile:
+    displayName: "Matrix Onboarding Kubectl Test Team"
+  parent: product
+  children: []
