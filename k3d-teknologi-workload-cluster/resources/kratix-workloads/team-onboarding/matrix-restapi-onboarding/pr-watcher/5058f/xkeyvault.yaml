@@ -1,0 +1,12 @@
+apiVersion: platform.teknologi.io/v1alpha1
+kind: XKeyVault
+metadata:
+  annotations:
+    argocd.argoproj.io/sync-wave: "2"
+  name: kv-matrix-onb-restapi-dev
+spec:
+  appName: matrix-onb-restapi
+  environment: dev
+  location: westeurope
+  resourceGroupName: teknologi-eur1-dev-matrix-onb-restapi-rg
+  tenantId: 99f9af3a-fd8b-41ec-b487-483a0c562b5c
