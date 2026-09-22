@@ -1,0 +1,16 @@
+apiVersion: platform.teknologi.io/v1alpha1
+kind: XKeyVault
+metadata:
+  name: kv-matrix-verify-longname-dev
+  annotations:
+    argocd.argoproj.io/sync-wave: "1"
+  labels:
+    kratix.io/promise-name: keyvault
+    kratix.io/resource-name: matrix-longname-kv
+spec:
+  appName: matrix-verify-longname
+  tenantId: 99f9af3a-fd8b-41ec-b487-483a0c562b5c
+  environment: dev
+  location: westeurope
+  resourceGroupName: teknologi-eur1-prd-platform-rg
+  vaultName: kvmatrixverifylongnamede
