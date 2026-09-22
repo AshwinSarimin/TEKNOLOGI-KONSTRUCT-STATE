@@ -35,6 +35,10 @@ spec:
               tenantId:
                 description: Azure tenant ID
                 type: string
+              vaultName:
+                description: Azure-safe compact Key Vault name (<=24 alphanumeric
+                  chars), computed by the pipeline from appName+environment
+                type: string
             required:
             - appName
             - environment
@@ -104,15 +108,9 @@ spec:
             - fromFieldPath: spec.environment
           toFieldPath: metadata.name
           type: CombineFromComposite
-        - combine:
-            strategy: string
-            string:
-              fmt: kv-%s-%s
-            variables:
-            - fromFieldPath: spec.appName
-            - fromFieldPath: spec.environment
+        - fromFieldPath: spec.vaultName
           toFieldPath: metadata.annotations[crossplane.io/external-name]
-          type: CombineFromComposite
+          type: FromCompositeFieldPath
         - fromFieldPath: metadata.name
           toFieldPath: status.vaultName
           type: ToCompositeFieldPath
