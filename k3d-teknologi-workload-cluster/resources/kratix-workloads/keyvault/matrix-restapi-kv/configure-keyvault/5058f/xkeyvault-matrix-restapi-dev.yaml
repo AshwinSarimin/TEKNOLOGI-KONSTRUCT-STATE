@@ -13,3 +13,4 @@ spec:
   environment: dev
   location: westeurope
   resourceGroupName: teknologi-eur1-prd-platform-rg
+  vaultName: kvmatrixrestapidev
