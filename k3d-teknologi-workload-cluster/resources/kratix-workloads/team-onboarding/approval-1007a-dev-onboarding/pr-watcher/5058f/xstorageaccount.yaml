@@ -1,0 +1,12 @@
+apiVersion: platform.teknologi.io/v1alpha1
+kind: XStorageAccount
+metadata:
+  annotations:
+    argocd.argoproj.io/sync-wave: "2"
+  name: sa-approval-1007a-dev
+spec:
+  appName: approval-1007a
+  environment: dev
+  location: westeurope
+  resourceGroupName: teknologi-eur1-dev-approval-1007a-rg
+  storageAccountName: tekapproval1007adevsa
