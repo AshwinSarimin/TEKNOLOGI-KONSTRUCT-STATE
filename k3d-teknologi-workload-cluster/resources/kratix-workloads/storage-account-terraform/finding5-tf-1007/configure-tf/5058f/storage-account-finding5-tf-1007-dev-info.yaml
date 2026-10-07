@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: storage-account-finding5-tf-1007-dev-info
+  namespace: default
+  labels:
+    teknologi.io/managed-by: kratix
+    teknologi.io/promise: storage-account
+    teknologi.io/team: finding5-tf-1007
+data:
+  storageAccountName: tekfinding5tf1007devsa
+  primaryBlobEndpoint: https://tekfinding5tf1007devsa.blob.core.windows.net/
+  resourceGroupName: teknologi-eur1-prd-platform-rg
+  location: westeurope
+  environment: dev
