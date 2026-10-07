@@ -1,0 +1,20 @@
+apiVersion: backstage.io/v1alpha1
+kind: Group
+metadata:
+  name: approval-1007a
+  namespace: default
+  description: "2026-10-07 approval binding live verification fixture"
+  annotations:
+    backstage.io/kubernetes-id: approval-1007a
+    teknologi.io/onboarding-request-uid: "58c058a6-1598-4a57-b24b-ca13c1a63bd2"
+    teknologi.io/onboarding-environment: "dev"
+    teknologi.io/onboarding-location: "westeurope"
+    teknologi.io/onboarding-namespace: "true"
+    teknologi.io/onboarding-keyvault: "true"
+    teknologi.io/onboarding-storage-account: "true"
+spec:
+  type: team
+  profile:
+    displayName: "Approval Binding Test 1007A"
+  parent: product
+  children: []
