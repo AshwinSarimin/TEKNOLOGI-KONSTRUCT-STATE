@@ -10,4 +10,4 @@ metadata:
 spec:
   namespaceName: finding4-1007-dev
   environment: dev
-  networkVisibility: private
+  networkVisibility: public
