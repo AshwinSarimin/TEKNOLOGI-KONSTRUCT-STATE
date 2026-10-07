@@ -3,6 +3,6 @@ kind: XResourceGroup
 metadata:
   annotations:
     argocd.argoproj.io/sync-wave: "1"
-  name: teknologi-eur1-dev-approval-1007a-rg
+  name: teknologi-eur1-tst-approval-1007a-rg
 spec:
   location: westeurope

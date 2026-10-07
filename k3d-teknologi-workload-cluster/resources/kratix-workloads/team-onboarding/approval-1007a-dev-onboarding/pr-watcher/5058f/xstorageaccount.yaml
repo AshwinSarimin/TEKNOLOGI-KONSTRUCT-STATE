@@ -3,10 +3,10 @@ kind: XStorageAccount
 metadata:
   annotations:
     argocd.argoproj.io/sync-wave: "2"
-  name: sa-approval-1007a-dev
+  name: sa-approval-1007a-tst
 spec:
   appName: approval-1007a
-  environment: dev
+  environment: tst
   location: westeurope
-  resourceGroupName: teknologi-eur1-dev-approval-1007a-rg
-  storageAccountName: tekapproval1007adevsa
+  resourceGroupName: teknologi-eur1-tst-approval-1007a-rg
+  storageAccountName: tekapproval1007atstsa

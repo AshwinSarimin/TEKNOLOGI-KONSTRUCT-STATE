@@ -3,11 +3,11 @@ kind: XKeyVault
 metadata:
   annotations:
     argocd.argoproj.io/sync-wave: "2"
-  name: kv-approval-1007a-dev
+  name: kv-approval-1007a-tst
 spec:
   appName: approval-1007a
-  environment: dev
+  environment: tst
   location: westeurope
-  resourceGroupName: teknologi-eur1-dev-approval-1007a-rg
+  resourceGroupName: teknologi-eur1-tst-approval-1007a-rg
   tenantId: 99f9af3a-fd8b-41ec-b487-483a0c562b5c
-  vaultName: kvapproval1007adev
+  vaultName: kvapproval1007atst
