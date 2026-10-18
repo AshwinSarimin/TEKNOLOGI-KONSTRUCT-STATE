@@ -1,0 +1,12 @@
+apiVersion: platform.teknologi.io/v1alpha1
+kind: XStorageAccount
+metadata:
+  annotations:
+    argocd.argoproj.io/sync-wave: "2"
+  name: sa-proofonbr1018-dev
+spec:
+  appName: proofonbr1018
+  environment: dev
+  location: westeurope
+  resourceGroupName: teknologi-eur1-dev-proofonbr1018-rg
+  storageAccountName: tekproofodevcb35b9c0desa

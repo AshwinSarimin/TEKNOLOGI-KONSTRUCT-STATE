@@ -1,0 +1,13 @@
+apiVersion: platform.teknologi.io/v1alpha1
+kind: XKeyVault
+metadata:
+  annotations:
+    argocd.argoproj.io/sync-wave: "2"
+  name: kv-proofonbr1018-dev
+spec:
+  appName: proofonbr1018
+  environment: dev
+  location: westeurope
+  resourceGroupName: teknologi-eur1-dev-proofonbr1018-rg
+  tenantId: 99f9af3a-fd8b-41ec-b487-483a0c562b5c
+  vaultName: kvproofonbrdeve7936589b4
