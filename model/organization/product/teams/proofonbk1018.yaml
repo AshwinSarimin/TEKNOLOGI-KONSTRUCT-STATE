@@ -1,0 +1,20 @@
+apiVersion: backstage.io/v1alpha1
+kind: Group
+metadata:
+  name: proofonbk1018
+  namespace: default
+  description: "Short-lived kubectl flow verification"
+  annotations:
+    backstage.io/kubernetes-id: proofonbk1018
+    teknologi.io/onboarding-request-uid: "f1554564-3d2a-4af9-aac6-d339852c7160"
+    teknologi.io/onboarding-environment: "dev"
+    teknologi.io/onboarding-location: "westeurope"
+    teknologi.io/onboarding-namespace: "true"
+    teknologi.io/onboarding-keyvault: "true"
+    teknologi.io/onboarding-storage-account: "true"
+spec:
+  type: team
+  profile:
+    displayName: "Onboarding matrix kubectl proof"
+  parent: product
+  children: []
