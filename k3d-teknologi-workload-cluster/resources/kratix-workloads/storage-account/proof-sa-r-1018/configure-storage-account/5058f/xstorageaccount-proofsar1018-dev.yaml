@@ -1,0 +1,15 @@
+apiVersion: platform.teknologi.io/v1alpha1
+kind: XStorageAccount
+metadata:
+  name: sa-proofsar1018-dev
+  annotations:
+    argocd.argoproj.io/sync-wave: "1"
+  labels:
+    kratix.io/promise-name: storage-account
+    kratix.io/resource-name: proof-sa-r-1018
+spec:
+  appName: proofsar1018
+  environment: dev
+  storageAccountName: tekproofsdev7d318b789asa
+  location: westeurope
+  resourceGroupName: teknologi-eur1-prd-platform-rg
