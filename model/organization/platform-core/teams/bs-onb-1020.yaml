@@ -1,0 +1,23 @@
+apiVersion: backstage.io/v1alpha1
+kind: Group
+metadata:
+  name: bs-onb-1020
+  namespace: default
+  description: ""
+  annotations:
+    backstage.io/kubernetes-id: bs-onb-1020
+    teknologi.io/onboarding-request-uid: "803db585-a02b-40b1-b50e-2af829e51ae5"
+    teknologi.io/onboarding-environment: "dev"
+    teknologi.io/onboarding-location: "westeurope"
+    teknologi.io/onboarding-namespace: "true"
+    teknologi.io/onboarding-keyvault: "true"
+    teknologi.io/onboarding-storage-account: "true"
+spec:
+  type: team
+  profile:
+    displayName: "bs-onb-1020"
+  parent: platform-core
+  children: []
+  members:
+    - "user:default/ashwin-sarimin"
+    - "user:default/sara-bergman"
