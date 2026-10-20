@@ -1,0 +1,13 @@
+apiVersion: platform.teknologi.io/v1alpha1
+kind: XKeyVault
+metadata:
+  annotations:
+    argocd.argoproj.io/sync-wave: "2"
+  name: kv-bs-onb-1020-dev
+spec:
+  appName: bs-onb-1020
+  environment: dev
+  location: westeurope
+  resourceGroupName: teknologi-eur1-dev-bs-onb-1020-rg
+  tenantId: 99f9af3a-fd8b-41ec-b487-483a0c562b5c
+  vaultName: kvbsonb1020dev393ca1c9c3

@@ -1,0 +1,10 @@
+apiVersion: platform.teknologi.io/v1alpha1
+kind: XNamespace
+metadata:
+  annotations:
+    argocd.argoproj.io/sync-wave: "2"
+  name: bs-onb-1020-dev
+spec:
+  environment: dev
+  namespaceName: bs-onb-1020-dev
+  networkVisibility: private

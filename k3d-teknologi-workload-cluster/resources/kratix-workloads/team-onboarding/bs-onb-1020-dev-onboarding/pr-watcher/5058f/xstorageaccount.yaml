@@ -1,0 +1,12 @@
+apiVersion: platform.teknologi.io/v1alpha1
+kind: XStorageAccount
+metadata:
+  annotations:
+    argocd.argoproj.io/sync-wave: "2"
+  name: sa-bs-onb-1020-dev
+spec:
+  appName: bs-onb-1020
+  environment: dev
+  location: westeurope
+  resourceGroupName: teknologi-eur1-dev-bs-onb-1020-rg
+  storageAccountName: tekbsonb1devcaec798c73sa
