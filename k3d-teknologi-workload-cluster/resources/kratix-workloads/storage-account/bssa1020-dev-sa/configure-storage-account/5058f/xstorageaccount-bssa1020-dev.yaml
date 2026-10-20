@@ -1,0 +1,15 @@
+apiVersion: platform.teknologi.io/v1alpha1
+kind: XStorageAccount
+metadata:
+  name: sa-bssa1020-dev
+  annotations:
+    argocd.argoproj.io/sync-wave: "1"
+  labels:
+    kratix.io/promise-name: storage-account
+    kratix.io/resource-name: bssa1020-dev-sa
+spec:
+  appName: bssa1020
+  environment: dev
+  storageAccountName: tekbssa10dev76767ea6f6sa
+  location: westeurope
+  resourceGroupName: teknologi-eur1-dev-bssa1020-rg
